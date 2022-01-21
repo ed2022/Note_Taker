@@ -51,7 +51,7 @@ const saveNote = (elem) =>
   .then((response) => response.json())
   .then((data) => {
     alert(data);
-    show(elem); 
+    handleNoteView(data); 
   })
   .catch((error) => { //catchs error
     console.error('Error:', error);
