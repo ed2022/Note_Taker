@@ -25,52 +25,29 @@ const hide = (elem) => {
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
 
-//GET 
 const getNotes = () =>
   fetch('/api/notes', {
-    method: 'GET', // or 'PUT'
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-    // body: JSON.stringify(data),
-   }) //Adding promises 
-    .then((response) => response.json())
-    .then((data) => data)
-    .catch((error) => { //Checks for errors 
-      console.error('Error:', error);
-    });
-//POST 
-const saveNote = (elem) =>
+  });
+
+const saveNote = (note) =>
   fetch('/api/notes', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(elem),
-  })//Adding the promises
-  .then((response) => response.json())
-  .then((data) => {
-    alert(data);
-    handleNoteView(data); 
-  })
-  .catch((error) => { //catchs error
-    console.error('Error:', error);
+    body: JSON.stringify(note),
   });
 
-//DELETE 
 const deleteNote = (id) =>
   fetch(`/api/notes/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
-  })
-  .then((response) => response.json())
-  .then((elem) => {
-    hide(elem);
-  })
-  .catch((error) => { //catchs error
-    console.error('Error:', error);
   });
 
 const renderActiveNote = () => {
@@ -107,7 +84,6 @@ const handleNoteDelete = (e) => {
 
   const note = e.target;
   const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
-
   if (activeNote.id === noteId) {
     activeNote = {};
   }
@@ -122,6 +98,7 @@ const handleNoteDelete = (e) => {
 const handleNoteView = (e) => {
   e.preventDefault();
   activeNote = JSON.parse(e.target.parentElement.getAttribute('data-note'));
+  console.log("ActiveNotes: " + activeNote);
   renderActiveNote();
 };
 
